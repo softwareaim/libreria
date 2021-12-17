@@ -3,10 +3,12 @@ package com.example.LibreriaWeb.service;
 import com.example.LibreriaWeb.dao.EditorialDao;
 import com.example.LibreriaWeb.domain.Editorial;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public class EditorialServiceImpl implements IdaoService<Editorial>{
 
     @Autowired

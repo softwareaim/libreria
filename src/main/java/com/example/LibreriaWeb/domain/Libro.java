@@ -2,18 +2,19 @@ package com.example.LibreriaWeb.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "libros")
-public class Libro {
-
+public class Libro implements Serializable {
+    private final static Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private String id;
+    private Integer id;
     @Column(name = "isbn")
     private Long isbn;
     @Column(name = "titulo")
@@ -28,12 +29,15 @@ public class Libro {
     private Integer ejemplaresRestantes;
     @Column(name = "alta")
     private Boolean alta;
-    @ManyToMany(mappedBy = "libros", cascade = CascadeType.ALL)
-   // @JoinColumn(name="autor_id",referencedColumnName = "id")
-    private List<Autor> autores;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_editorial",referencedColumnName = "id")
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_autor")
+    private Autor autor;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_editorial", referencedColumnName = "id")
     private Editorial editorial;
+
     @OneToMany(mappedBy = "libro")
     private List<Prestamo>  prestamo;
 

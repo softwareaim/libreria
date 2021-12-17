@@ -3,10 +3,11 @@ package com.example.LibreriaWeb.service;
 import com.example.LibreriaWeb.dao.ClienteDao;
 import com.example.LibreriaWeb.domain.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Service
 public class ClienteServiceImpl implements IdaoService<Cliente>{
 
     @Autowired
