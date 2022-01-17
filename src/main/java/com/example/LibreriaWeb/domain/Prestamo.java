@@ -1,6 +1,7 @@
 package com.example.LibreriaWeb.domain;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -26,20 +28,33 @@ public class Prestamo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
+    @NotNull
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name="fecha_prestamo")
     private Date fechaPrestamo;
+
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name="fecha_devolucion")
     private Date fechaDevolucion;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_libro",referencedColumnName = "id")
     private Libro libro;
 
+    @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_cliente",referencedColumnName = "id")
     private Cliente cliente;
+
+    public Prestamo(){
+
+    }
 
     
 }

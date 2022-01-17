@@ -8,25 +8,32 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "libros")
+@Table(name = "libros",uniqueConstraints = @UniqueConstraint(columnNames = "isbn"))
 public class Libro implements Serializable {
     private final static Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
     @Column(name = "isbn")
     private Long isbn;
+
     @Column(name = "titulo")
     private String titulo;
+
     @Column(name = "anio")
     private Integer anio;
+
     @Column(name = "ejemplares")
     private Integer ejemplares;
+
     @Column(name = "prestados")
     private Integer ejemplaresPrestados;
+
     @Column(name = "restantes")
     private Integer ejemplaresRestantes;
+
     @Column(name = "alta")
     private Boolean alta;
 
@@ -40,5 +47,13 @@ public class Libro implements Serializable {
 
     @OneToMany(mappedBy = "libro")
     private List<Prestamo>  prestamo;
+
+    public Libro(){
+
+    }
+
+    public Libro(Integer id){
+        this.id = id;
+    }
 
 }

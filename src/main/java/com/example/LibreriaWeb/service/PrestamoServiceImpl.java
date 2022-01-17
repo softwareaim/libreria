@@ -37,4 +37,6 @@ public class PrestamoServiceImpl implements IdaoService<Prestamo>{
     public Prestamo encontrar(Prestamo prestamo) {
         return prestamoDao.findById(prestamo.getId()).orElse(null);
     }
+
+
 }

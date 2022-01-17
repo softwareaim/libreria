@@ -4,11 +4,11 @@ import java.util.List;
 
 public interface IdaoService<T> {
 
-    public List<T> litar();
+    List<T> litar();
 
-    public void guardar(T t);
+    void guardar(T t);
 
-    public void eliminar(T t);
+    void eliminar(T t);
 
-    public T encontrar(T t);
+    T encontrar(T t);
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibroServiceImpl implements IdaoService<Libro>{
@@ -23,6 +24,13 @@ public class LibroServiceImpl implements IdaoService<Libro>{
     @Override
     @Transactional
     public void guardar(Libro libro) {
+        libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
+        if(libro.getEjemplaresRestantes()>0) {
+            libro.setAlta(true);
+        }else{
+            libro.setAlta(false);
+            libro.setEjemplaresPrestados();
+        }
         libroDao.save(libro);
     }
 
@@ -38,4 +46,5 @@ public class LibroServiceImpl implements IdaoService<Libro>{
     public Libro encontrar(Libro libro) {
       return libroDao.findById(libro.getId()).orElse(null);
     }
+
 }
