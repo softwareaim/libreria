@@ -2,7 +2,7 @@ package com.example.LibreriaWeb.service;
 
 import java.util.List;
 
-public interface IdaoService<T> {
+public interface IdaoService<T,K> {
 
     List<T> litar();
 
@@ -10,5 +10,5 @@ public interface IdaoService<T> {
 
     void eliminar(T t);
 
-    T encontrar(T t);
+    T encontrar(K k);
 }

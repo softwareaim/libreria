@@ -42,10 +42,8 @@ public class EditorialController {
 
     @RequestMapping("/editar/{id}")
     public String editarEditorial(@PathVariable("id")Integer id, Model model){
-        Editorial editorial = new Editorial();
-        editorial.setId(id);
-        if (editorialService.encontrar(editorial) != null) {
-            model.addAttribute("editorial", editorialService.encontrar(editorial));
+        if (editorialService.encontrar(id) != null) {
+            model.addAttribute("editorial", editorialService.encontrar(id));
             model.addAttribute("titulo", "Fromulario de Editorial");
             return "form-editorial";
         }
@@ -54,10 +52,9 @@ public class EditorialController {
 
     @RequestMapping("/eliminar/{id}")
     public String eliminarEditorial(@PathVariable("id")Integer id){
-        Editorial editorial = new Editorial();
-        editorial.setId(id);
-        if (editorialService.encontrar(editorial) != null) {
-            editorialService.eliminar(editorial);
+
+        if (editorialService.encontrar(id) != null) {
+            editorialService.eliminar(editorialService.encontrar(id));
         }
         return "redirect:/editorial/listar";
     }

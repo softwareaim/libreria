@@ -42,7 +42,7 @@ public class AutorController {
     public String elimarAutor(@PathVariable("id")Integer id){
             Autor autor = new Autor();
             autor.setId(id);
-           if(autorService.encontrar(autor) != null){
+           if(autorService.encontrar(id) != null){
                autorService.eliminar(autor);
            }
         return "redirect:/autor/listar";
@@ -52,8 +52,8 @@ public class AutorController {
     public String editarAutor(@PathVariable("id")Integer id,Model model){
         Autor autor = new Autor();
         autor.setId(id);
-        if(autorService.encontrar(autor) != null){
-            model.addAttribute("autor", autorService.encontrar(autor));
+        if(autorService.encontrar(id) != null){
+            model.addAttribute("autor", autorService.encontrar(id));
             model.addAttribute("titulo","Fromulario de Autor");
             return "form-autor";
         }

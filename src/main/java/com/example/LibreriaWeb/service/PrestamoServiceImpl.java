@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class PrestamoServiceImpl implements IdaoService<Prestamo>{
+public class PrestamoServiceImpl implements IdaoService<Prestamo,Integer>{
 
     @Autowired
     private PrestamoDao prestamoDao;
@@ -34,8 +34,8 @@ public class PrestamoServiceImpl implements IdaoService<Prestamo>{
 
     @Override
     @Transactional(readOnly = true)
-    public Prestamo encontrar(Prestamo prestamo) {
-        return prestamoDao.findById(prestamo.getId()).orElse(null);
+    public Prestamo encontrar(Integer id) {
+        return prestamoDao.findById(id).orElse(null);
     }
 
 

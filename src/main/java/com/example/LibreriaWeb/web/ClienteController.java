@@ -41,20 +41,17 @@ public class ClienteController {
 
     @RequestMapping("/eliminar/{id}")
     public String eliminar(@PathVariable("id") Integer id) {
-        Cliente cliente = new Cliente();
-        cliente.setId(id);
-        if (clienteService.encontrar(cliente) != null) {
-            clienteService.eliminar(cliente);
+ ;
+        if (clienteService.encontrar(id) != null) {
+            clienteService.eliminar(clienteService.encontrar(id));
         }
         return "redirect:/cliente/listar";
     }
 
     @RequestMapping("/editar/{id}")
     public String editar(@PathVariable("id") Integer id, Model model) {
-        Cliente cliente = new Cliente();
-        cliente.setId(id);
-        if (clienteService.encontrar(cliente) != null) {
-            model.addAttribute("cliente", clienteService.encontrar(cliente));
+        if (clienteService.encontrar(id) != null) {
+            model.addAttribute("cliente", clienteService.encontrar(id));
             model.addAttribute("titulo", "Fromulario de Cliente");
             return "form-cliente";
         }

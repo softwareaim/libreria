@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org"xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,30 +32,39 @@
                     <form th:fragment="libro_form" th:action="@{/libro/form}" th:object="${libro}" method="post"
                           class="form">
 
-                        <label for="isbn" class="form-label">ISBN:</label>
-                        <input type="text" th:field="*{isbn}" id="isbn" class="form-control w-50"/>
+                        <p th:text="${mensaje}">mensaje de error</p>
+
+                        <input type="hidden" name="id" th:field="*{id}" class="form-control w-50"/>
+<!--                        <label for="isbn" class="form-label">ISBN:</label>-->
+                        <!--input type="text" th:field="*{isbn}" id="isbn" class="form-control w-50"/-->
                         <br/>
                         <label for="titulo" class="form-label">Titulo:</label>
                         <input type="text" th:field="*{titulo}" id="titulo" class="form-control w-50"/>
+                        <span th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Error Titulo</span>
                         <br/>
-                        <label for="anio" class="form-label">Año:</label>
-                        <input type="number" th:field="*{anio}" id="anio" class="form-control w-50"/>
+                        <!--label for="anio" class="form-label">Año:</label>
+                        <input type="number" th:field="*{anio}" id="anio" class="form-control w-50"/-->
                         <br/>
                         <label for="ejemplares" class="form-label">Ejemplares:</label>
                         <input type="number" th:field="*{ejemplares}" id="ejemplares" class="form-control w-50"/>
+                        <span th:if="${#fields.hasErrors('ejemplares')}" th:errors="*{ejemplares}">Error ejemplares</span>
                         <br/>
-                        <label for="prestados" class="form-label">Prestados:</label>
+                        <!--label for="prestados" class="form-label">Prestados:</label>
                         <input type="number" th:field="*{ejemplaresPrestados}" id="prestados"
-                               class="form-control w-50"/>
-                        <br/>
-                        <label for="alta" class="form-label">Alta:</label>
-                        <input type="text" th:field="*{alta}" id="alta" class="form-control w-50"/>
+                               class="form-control w-50"/-->
+<!--                        <br/>-->
+<!--                        <label for="alta" class="form-label">Alta:</label>-->
+<!--                        <input type="text" th:field="*{alta}" id="alta" class="form-control w-50"/>-->
                         <br/>
                         <label for="autor" class="form-label">idAutor:</label>
-                        <input type="number" th:field="*{autor.id}" id="autor" class="form-control w-50"/>
+                        <input type="number" name="idAutor" id="autor" class="form-control w-50"/>
+                        <p th:text="${errorAutor}">mensaje de error</p>
+                        <!--span th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}">Error autor</span-->
                         <br/>
                         <label for="editorial" class="form-label">idEditorial</label>
-                        <input type="number" th:field="*{editorial.id}" id="editorial" class="form-control w-50"/>
+                        <input type="number" name="idEditorial" id="editorial" class="form-control w-50"/>
+                        <p th:text="${errorEditorial}">mensaje de error</p>
+                        <!--span th:if="${#fields.hasErrors('editorial')}" th:errors="*{editorial}">Error editorial</span-->
                         <br/>
                         <button type="submit" class="btn btn-primary">Guardar</button>
 

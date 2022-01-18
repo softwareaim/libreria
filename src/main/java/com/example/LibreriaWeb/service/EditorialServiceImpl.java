@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class EditorialServiceImpl implements IdaoService<Editorial>{
+public class EditorialServiceImpl implements IdaoService<Editorial,Integer>{
 
     @Autowired
     private EditorialDao editorialDao;
@@ -34,7 +34,7 @@ public class EditorialServiceImpl implements IdaoService<Editorial>{
 
     @Override
     @Transactional(readOnly = true)
-    public Editorial encontrar(Editorial editorial) {
-        return editorialDao.findById(editorial.getId()).orElse(null);
+    public Editorial encontrar(Integer id) {
+        return editorialDao.findById(id).orElse(null);
     }
 }

@@ -11,12 +11,15 @@ import java.util.List;
 @Table(name = "editoriales")
 public class Editorial implements Serializable {
     private final static Long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
     @Column(name = "nombre")
     private String nombre;
+
     @Column(name = "alta")
     private Boolean alta;
 

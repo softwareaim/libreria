@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class AutorServiceImpl implements IdaoService<Autor> {
+public class AutorServiceImpl implements IdaoService<Autor,Integer> {
 
     @Autowired
     private AutorDao autorDao;
@@ -34,7 +34,7 @@ public class AutorServiceImpl implements IdaoService<Autor> {
 
     @Override
     @Transactional(readOnly = true)
-    public Autor encontrar(Autor autor) {
-        return autorDao.findById(autor.getId()).orElse(null);
+    public Autor encontrar(Integer id) {
+        return autorDao.findById(id).orElse(null);
     }
 }

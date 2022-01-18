@@ -5,6 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @Entity
@@ -19,12 +21,14 @@ public class Libro implements Serializable {
     @Column(name = "isbn")
     private Long isbn;
 
+    @NotEmpty(message = "Alexis titulo")
     @Column(name = "titulo")
     private String titulo;
 
     @Column(name = "anio")
     private Integer anio;
 
+    @NotNull(message = "Alexis ejemplares")
     @Column(name = "ejemplares")
     private Integer ejemplares;
 
@@ -37,12 +41,14 @@ public class Libro implements Serializable {
     @Column(name = "alta")
     private Boolean alta;
 
+    //@NotNull(message = "Alexis autor")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_autor")
     private Autor autor;
 
+   // @NotNull(message = "Alexis editorial")
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_editorial", referencedColumnName = "id")
+    @JoinColumn(name = "id_editorial")
     private Editorial editorial;
 
     @OneToMany(mappedBy = "libro")

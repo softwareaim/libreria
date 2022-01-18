@@ -32,7 +32,7 @@ public class Prestamo implements Serializable {
     @NotNull
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-//    @DateTimeFormat(pattern = "dd/MM/yyyy")
+  // @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name="fecha_prestamo")
     private Date fechaPrestamo;
 

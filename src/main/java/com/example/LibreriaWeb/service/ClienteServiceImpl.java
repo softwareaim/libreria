@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
-public class ClienteServiceImpl implements IdaoService<Cliente>{
+public class ClienteServiceImpl implements IdaoService<Cliente,Integer>{
 
     @Autowired
     private ClienteDao clienteDao;
@@ -33,7 +33,7 @@ public class ClienteServiceImpl implements IdaoService<Cliente>{
 
     @Override
     @Transactional(readOnly = true)
-    public Cliente encontrar(Cliente cliente) {
-        return clienteDao.findById(cliente.getId()).orElse(null);
+    public Cliente encontrar(Integer id) {
+        return clienteDao.findById(id).orElse(null);
     }
 }

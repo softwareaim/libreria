@@ -1,9 +1,12 @@
 package com.example.LibreriaWeb.web;
 
+import com.example.LibreriaWeb.dao.PrestamoDao;
 import com.example.LibreriaWeb.domain.Cliente;
 import com.example.LibreriaWeb.domain.Libro;
 import com.example.LibreriaWeb.domain.Prestamo;
+import com.example.LibreriaWeb.service.ClienteServiceImpl;
 import com.example.LibreriaWeb.service.IdaoService;
+import com.example.LibreriaWeb.service.LibroServiceImpl;
 import com.example.LibreriaWeb.service.PrestamoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,11 +21,11 @@ import org.springframework.web.bind.support.SessionStatus;
 public class PrestamoController {
 
     @Autowired
-    private IdaoService<Prestamo> prestamoService;
+    private PrestamoServiceImpl prestamoService;
     @Autowired
-    private IdaoService<Cliente> clienteIdaoService;
+    private ClienteServiceImpl clienteIdaoService;
     @Autowired
-    private IdaoService<Libro> libroIdaoService;
+    private LibroServiceImpl libroIdaoService;
 
     @GetMapping("/listar")
     public String listarPrestamos(Model model) {
@@ -35,20 +38,16 @@ public class PrestamoController {
     @PostMapping("/form")
     public String guardar(Prestamo prestamo, Integer id_libro, Integer id_cliente, SessionStatus status){
         status.setComplete();
-
-        Cliente cliente = new Cliente();
-        cliente.setId(id_cliente);
-
-         Libro libro = libroIdaoService.encontrar(new Libro(id_libro));
+         Libro libro = libroIdaoService.encontrar(id_libro);
 
         if(libro.getAlta()){
-            libro.setPrestados(libro.getPrestados()+1);
+            libro.setEjemplaresPrestados(libro.getEjemplaresPrestados()+1);
             libroIdaoService.guardar(libro);
             prestamo.setLibro(libro);
         }
 
 
-        prestamo.setCliente(clienteIdaoService.encontrar(cliente));
+        prestamo.setCliente(clienteIdaoService.encontrar(id_cliente));
         prestamoService.guardar(prestamo);
         return "redirect:/prestamo/listar";
     }

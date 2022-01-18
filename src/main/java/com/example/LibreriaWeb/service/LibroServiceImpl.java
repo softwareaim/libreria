@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LibroServiceImpl implements IdaoService<Libro>{
+public class LibroServiceImpl implements IdaoService<Libro,Integer>{
 
     @Autowired
     private LibroDao libroDao;
@@ -24,13 +24,11 @@ public class LibroServiceImpl implements IdaoService<Libro>{
     @Override
     @Transactional
     public void guardar(Libro libro) {
-        libro.setEjemplaresRestantes(libro.getEjemplares() - libro.getEjemplaresPrestados());
-        if(libro.getEjemplaresRestantes()>0) {
-            libro.setAlta(true);
-        }else{
-            libro.setAlta(false);
-            libro.setEjemplaresPrestados();
-        }
+
+        libro.setAlta(true);
+        //libro.set
+
+
         libroDao.save(libro);
     }
 
@@ -43,8 +41,8 @@ public class LibroServiceImpl implements IdaoService<Libro>{
 
     @Override
     @Transactional(readOnly = true)
-    public Libro encontrar(Libro libro) {
-      return libroDao.findById(libro.getId()).orElse(null);
+    public Libro encontrar(Integer id) {
+      return libroDao.findById(id).orElse(null);
     }
 
 }
