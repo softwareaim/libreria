@@ -2,12 +2,12 @@ package com.example.LibreriaWeb.service;
 
 import com.example.LibreriaWeb.dao.LibroDao;
 import com.example.LibreriaWeb.domain.Libro;
+import com.example.LibreriaWeb.errores.ErrorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LibroServiceImpl implements IdaoService<Libro,Integer>{
@@ -17,7 +17,7 @@ public class LibroServiceImpl implements IdaoService<Libro,Integer>{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Libro> litar() {
+    public List<Libro> listar() {
         return libroDao.findAll();
     }
 
@@ -34,15 +34,19 @@ public class LibroServiceImpl implements IdaoService<Libro,Integer>{
 
     @Override
     @Transactional
-    public void eliminar(Libro libro) {
-        libroDao.delete(libro);
+    public void eliminar(Integer id) throws ErrorServicio {
+        libroDao.delete(encontrar(id));
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Libro encontrar(Integer id) {
-      return libroDao.findById(id).orElse(null);
+    public Libro encontrar(Integer id) throws ErrorServicio {
+      Libro libro = libroDao.findById(id).orElse(null);
+            if (libro == null){
+                throw new ErrorServicio("No se encontro Libro");
+            }
+        return libro;
     }
 
 }

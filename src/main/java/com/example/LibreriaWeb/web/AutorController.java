@@ -1,10 +1,12 @@
 package com.example.LibreriaWeb.web;
 
 import com.example.LibreriaWeb.domain.Autor;
+import com.example.LibreriaWeb.errores.ErrorServicio;
 import com.example.LibreriaWeb.service.AutorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -19,7 +21,8 @@ public class AutorController {
     @GetMapping("/listar")
     public String listarAutores(Model model){
         model.addAttribute("titulo","Lista De Autores");
-        model.addAttribute("listaAutores",autorService.litar());
+        model.addAttribute("listaAutores",autorService.listar());
+
         return "listar-autores";
     }
 
@@ -39,24 +42,29 @@ public class AutorController {
     }
 
     @RequestMapping("/eliminar/{id}")
-    public String elimarAutor(@PathVariable("id")Integer id){
-            Autor autor = new Autor();
-            autor.setId(id);
-           if(autorService.encontrar(id) != null){
-               autorService.eliminar(autor);
-           }
-        return "redirect:/autor/listar";
+    public String elimarAutor(@PathVariable("id")Integer id, ModelMap model){
+
+        try {
+            autorService.eliminar(id);
+        } catch (ErrorServicio e) {
+            model.put("errorAutor",e.getMessage());
+            return "redirect:/autor/listar";
+        }finally {
+            return "redirect:/autor/listar";
+        }
+
     }
 
     @RequestMapping("/editar/{id}")
     public String editarAutor(@PathVariable("id")Integer id,Model model){
-        Autor autor = new Autor();
-        autor.setId(id);
-        if(autorService.encontrar(id) != null){
+        try {
             model.addAttribute("autor", autorService.encontrar(id));
             model.addAttribute("titulo","Fromulario de Autor");
             return "form-autor";
+        } catch (ErrorServicio e) {
+            model.addAttribute("errorAutor",e.getMessage());
+            return "redirect:/autor/listar";
         }
-        return "redirect:/autor/listar";
+
     }
 }

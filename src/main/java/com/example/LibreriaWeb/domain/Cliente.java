@@ -13,7 +13,9 @@ import javax.validation.constraints.*;
 @Entity
 @Table(name = "clientes", uniqueConstraints = @UniqueConstraint(columnNames = "dni"))
 public class Cliente implements Serializable {
-    private final static Long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7550394759857233400L;
+    //private final static Long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")

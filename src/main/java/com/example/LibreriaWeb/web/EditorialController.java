@@ -1,6 +1,7 @@
 package com.example.LibreriaWeb.web;
 
 import com.example.LibreriaWeb.domain.Editorial;
+import com.example.LibreriaWeb.errores.ErrorServicio;
 import com.example.LibreriaWeb.service.EditorialServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class EditorialController {
 
     @RequestMapping("/listar")
     public String listarEditoriales(Model model) {
-        model.addAttribute("editoriales", editorialService.litar());
+        model.addAttribute("editoriales", editorialService.listar());
         model.addAttribute("titulo", "Lista de Editoriales");
         return "listar-editoriales";
     }
@@ -42,20 +43,27 @@ public class EditorialController {
 
     @RequestMapping("/editar/{id}")
     public String editarEditorial(@PathVariable("id")Integer id, Model model){
-        if (editorialService.encontrar(id) != null) {
+
+        try {
             model.addAttribute("editorial", editorialService.encontrar(id));
             model.addAttribute("titulo", "Fromulario de Editorial");
             return "form-editorial";
+        } catch (ErrorServicio e) {
+           model.addAttribute("errorEditorial",e.getMessage());
+            return "redirect:/editorial/listar";
         }
-        return "redirect:/editorial/listar";
+
     }
 
     @RequestMapping("/eliminar/{id}")
-    public String eliminarEditorial(@PathVariable("id")Integer id){
-
-        if (editorialService.encontrar(id) != null) {
-            editorialService.eliminar(editorialService.encontrar(id));
+    public String eliminarEditorial(@PathVariable("id")Integer id, Model model){
+        try {
+            editorialService.eliminar(id);
+        } catch (ErrorServicio e) {
+            model.addAttribute("errorEditorial",e.getMessage());
+        }finally {
+            return "redirect:/editorial/listar";
         }
-        return "redirect:/editorial/listar";
+
     }
 }

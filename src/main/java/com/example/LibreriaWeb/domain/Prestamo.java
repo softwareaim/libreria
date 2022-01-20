@@ -23,7 +23,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "prestamos")
 public class Prestamo implements Serializable {
-    private final static Long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6837648999326959085L;
+    //private final static Long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")

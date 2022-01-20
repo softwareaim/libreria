@@ -12,7 +12,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "libros",uniqueConstraints = @UniqueConstraint(columnNames = "isbn"))
 public class Libro implements Serializable {
-    private final static Long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5998739394586975167L;
+    //private final static Long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
@@ -21,7 +23,7 @@ public class Libro implements Serializable {
     @Column(name = "isbn")
     private Long isbn;
 
-    @NotEmpty(message = "Alexis titulo")
+    @NotEmpty
     @Column(name = "titulo")
     private String titulo;
 
@@ -42,12 +44,12 @@ public class Libro implements Serializable {
     private Boolean alta;
 
     //@NotNull(message = "Alexis autor")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="id_autor")
     private Autor autor;
 
    // @NotNull(message = "Alexis editorial")
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_editorial")
     private Editorial editorial;
 

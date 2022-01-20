@@ -2,6 +2,7 @@ package com.example.LibreriaWeb.service;
 
 import com.example.LibreriaWeb.dao.PrestamoDao;
 import com.example.LibreriaWeb.domain.Prestamo;
+import com.example.LibreriaWeb.errores.ErrorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +17,7 @@ public class PrestamoServiceImpl implements IdaoService<Prestamo,Integer>{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Prestamo> litar() {
+    public List<Prestamo> listar() {
         return prestamoDao.findAll();
     }
 
@@ -28,14 +29,18 @@ public class PrestamoServiceImpl implements IdaoService<Prestamo,Integer>{
 
     @Override
     @Transactional
-    public void eliminar(Prestamo prestamo) {
-        prestamoDao.delete(prestamo);
+    public void eliminar(Integer id) throws ErrorServicio {
+        prestamoDao.delete(encontrar(id));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Prestamo encontrar(Integer id) {
-        return prestamoDao.findById(id).orElse(null);
+    public Prestamo encontrar(Integer id) throws ErrorServicio {
+        Prestamo prestamo = prestamoDao.findById(id).orElse(null);
+        if (prestamo == null){
+            throw new ErrorServicio("No se encontro Prestamo");
+        }
+        return prestamo;
     }
 
 

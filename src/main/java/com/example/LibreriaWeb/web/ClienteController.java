@@ -1,8 +1,8 @@
 package com.example.LibreriaWeb.web;
 
 
-import com.example.LibreriaWeb.domain.Autor;
 import com.example.LibreriaWeb.domain.Cliente;
+import com.example.LibreriaWeb.errores.ErrorServicio;
 import com.example.LibreriaWeb.service.ClienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class ClienteController {
     @GetMapping("/listar")
     public String agregarCliente(Model model) {
         model.addAttribute("titulo", "Lista de Clientes");
-        model.addAttribute("listaClientes", clienteService.litar());
+        model.addAttribute("listaClientes", clienteService.listar());
         return "listar-clientes";
     }
 
@@ -40,21 +40,32 @@ public class ClienteController {
     }
 
     @RequestMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable("id") Integer id) {
+    public String eliminar(@PathVariable("id") Integer id,Model model) {
  ;
-        if (clienteService.encontrar(id) != null) {
-            clienteService.eliminar(clienteService.encontrar(id));
-        }
-        return "redirect:/cliente/listar";
+
+        try {
+            clienteService.eliminar(id);
+        } catch (ErrorServicio e) {
+            model.addAttribute("errorCliente",e.getMessage());
+        }finally {
+
+        return "redirect:/cliente/listar";}
+
     }
 
     @RequestMapping("/editar/{id}")
     public String editar(@PathVariable("id") Integer id, Model model) {
-        if (clienteService.encontrar(id) != null) {
+
+        try {
             model.addAttribute("cliente", clienteService.encontrar(id));
             model.addAttribute("titulo", "Fromulario de Cliente");
             return "form-cliente";
+        } catch (ErrorServicio e) {
+            model.addAttribute("errorCliente",e.getMessage());
+            return "redirect:/cliente/listar";
         }
-        return "redirect:/cliente/listar";
-    }
+
+        }
+
+
 }
