@@ -32,12 +32,21 @@ public class LibroController {
     private EditorialServiceImpl editorialService;
 
     @GetMapping("/listar")
-    public String listarLibros(Model model) {
-        model.addAttribute("titulo","Lista de Libros");
-        model.addAttribute("libros", libroService.listar());
-        model.addAttribute("libro",new Libro());
-
-
+    public String listarLibros(Model model, @RequestParam(required = false) String q) {
+        try{
+        if(q != null && !q.isEmpty()){
+            model.addAttribute("titulo", "Lista de Libros");
+            model.addAttribute("libros", libroService.listarPorBusqueda(q));
+            model.addAttribute("libro", new Libro());
+        }else {
+            model.addAttribute("titulo", "Lista de Libros");
+            model.addAttribute("libros", libroService.listar());
+            model.addAttribute("libro", new Libro());
+        }
+        }catch (ErrorServicio e){
+            model.addAttribute("titulo", "Lista de Libros");
+            model.addAttribute("errorLibro", e.getMessage());
+        }
         return "listar-libros";
     }
 
@@ -49,12 +58,11 @@ public class LibroController {
             return "form-libro";
         }
         try {
-
-            Autor autor = autorService.buscarPorNombre(libro.getAutor().getNombre());
-            Editorial editorial = editorialService.buscarPorNombre(libro.getEditorial().getNombre());
-
-            libro.setAutor(autor);
-            libro.setEditorial(editorial);
+//            Autor autor = autorService.buscarPorNombre(libro.getAutor().getNombre());
+//            Editorial editorial = editorialService.buscarPorNombre(libro.getEditorial().getNombre());
+//
+//            libro.setAutor(autor);
+//            libro.setEditorial(editorial);
             status.setComplete();
             libroService.guardar(libro);
         }catch (Exception ex){

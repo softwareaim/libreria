@@ -44,12 +44,12 @@ public class Libro implements Serializable {
     private Boolean alta;
 
     //@NotNull(message = "Alexis autor")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name="id_autor")
     private Autor autor;
 
    // @NotNull(message = "Alexis editorial")
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "id_editorial")
     private Editorial editorial;
 

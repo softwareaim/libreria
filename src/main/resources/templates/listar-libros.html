@@ -15,9 +15,21 @@
     <h1 th:text="${titulo}"></h1>
     <!--    <a class="btn btn-success" th:href="@{/prestamo/form}">Crear prestamo</a>-->
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearLibro">
-        Crear Libro
-    </button>
+
+    <form class="row g-3" th:action="@{/libro/listar}" method="get">
+        <div class="col-auto">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearLibro">
+                Crear Libro
+            </button>
+        </div>
+    <div class="col-auto">
+        <label for="busqueda" class="visually-hidden">Busqueda</label>
+        <input type="text" class="form-control" id="busqueda" name="q" placeholder="Busqueda">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+    </div>
+</form>
 
     <!-- Modal -->
     <div class="modal fade" id="crearLibro" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -29,50 +41,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:fragment="libro_form" th:action="@{/libro/form}" th:object="${libro}" method="post"
-                          class="form">
-
-                        <p th:text="${error}" style="color:red">mensaje de error</p>
-
-                        <input type="hidden" name="id" th:field="*{id}" class="form-control w-50"/>
-<!--                        <label for="isbn" class="form-label">ISBN:</label>-->
-                        <!--input type="text" th:field="*{isbn}" id="isbn" class="form-control w-50"/-->
-                        <br/>
-                        <label for="titulo" class="form-label">Titulo:</label>
-                        <input type="text" th:field="*{titulo}" id="titulo" class="form-control w-50"/>
-                        <span th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}">Error Titulo</span>
-                        <br/>
-                        <!--label for="anio" class="form-label">Año:</label>
-                        <input type="number" th:field="*{anio}" id="anio" class="form-control w-50"/-->
-                        <br/>
-                        <label for="ejemplares" class="form-label">Ejemplares:</label>
-                        <input type="number" th:field="*{ejemplares}" id="ejemplares" class="form-control w-50"/>
-                        <span th:if="${#fields.hasErrors('ejemplares')}" th:errors="*{ejemplares}">Error ejemplares</span>
-                        <br/>
-                        <!--label for="prestados" class="form-label">Prestados:</label>
-                        <input type="number" th:field="*{ejemplaresPrestados}" id="prestados"
-                               class="form-control w-50"/-->
-<!--                        <br/>-->
-<!--                        <label for="alta" class="form-label">Alta:</label>-->
-<!--                        <input type="text" th:field="*{alta}" id="alta" class="form-control w-50"/>-->
-                        <br/>
-                        <label for="autor" class="form-label">idAutor:</label>
-                        <input type="text" th:field="*{autor.nombre}" id="autor" class="form-control w-50"/>
-<!--                        <select class="form-control" name="idAutor">-->
-<!--                            <option th:each="autor : ${autores}" th:value="${autor.id}"  th:text="${autor.nombre}">Lista de Autores</option>-->
-
-<!--                        </select>-->
-
-                        <!--span th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}">Error autor</span-->
-                        <br/>
-                        <label for="editorial" class="form-label">idEditorial</label>
-                        <input type="text" th:field="*{editorial.nombre}" id="editorial" class="form-control w-50"/>
-
-                        <!--span th:if="${#fields.hasErrors('editorial')}" th:errors="*{editorial}">Error editorial</span-->
-                        <br/>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-
-                    </form>
+                    <form th:replace="form-libro :: libro_form"></form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -81,9 +50,11 @@
             </div>
         </div>
     </div>
+    <p th:text="${errorLibro}" style="color: red">Error ListarLibro</p>
 </section>
 
-<main class="container">
+<main class="container"><form class="row g-3">
+
     <table class="table table-striped">
         <thead>
         <tr>
