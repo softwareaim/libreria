@@ -2,6 +2,7 @@
 package com.example.LibreriaWeb.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -21,9 +22,14 @@ public class Usuario implements Serializable{
     
     @NotEmpty
     private String password;
+
+    private Boolean enabled;
     
-    @OneToMany
-    @JoinColumn(name="id_usuario")
-    private List<Rol> roles;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_roles",joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id"),
+            uniqueConstraints = {@UniqueConstraint(columnNames = {"usuario_id","roles_id"})})
+
+    private List<Rol> roles = new ArrayList<>();
     
 }

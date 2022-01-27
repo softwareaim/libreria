@@ -9,9 +9,7 @@ public class LibreriaWebApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(LibreriaWebApplication.class, args);
-
-
-
 	}
+
 
 }

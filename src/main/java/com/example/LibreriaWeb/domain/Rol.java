@@ -2,7 +2,6 @@ package com.example.LibreriaWeb.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import lombok.Data;
 
 @Entity
@@ -14,6 +13,7 @@ public class Rol implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String rol;
    
  
