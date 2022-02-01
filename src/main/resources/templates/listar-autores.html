@@ -35,8 +35,8 @@
                         <td th:text="${autor.id}"></td>
                         <td th:text="${autor.nombre}"></td>
                         <td th:text="${autor.alta}"></td>
-                        <td><a class="btn btn-primary" th:href="@{/autor/editar/} + ${autor.id}">Editar</a></td>
-                        <td><a class="btn btn-danger" th:href="@{/autor/eliminar/} + ${autor.id}">Eliminar</a></td>
+                        <td><a sec:authorize="hasRole('ROLE_ADMIN')"  class="btn btn-primary" th:href="@{/autor/editar/} + ${autor.id}">Editar</a></td>
+                        <td><a sec:authorize="hasRole('ROLE_ADMIN')"  class="btn btn-danger" th:href="@{/autor/eliminar/} + ${autor.id}">Eliminar</a></td>
                     </tr>
                 </tbody>
             </table>

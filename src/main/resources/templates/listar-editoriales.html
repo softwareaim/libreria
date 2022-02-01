@@ -32,8 +32,8 @@
                         <td th:text="${editorial.id}"></td>
                         <td th:text="${editorial.nombre}"></td>
                         <td th:text="${editorial.alta}"></td>
-                        <td><a class="btn btn-primary" th:href="@{/editorial/editar/} + ${editorial.id}">Editar</a></td>
-                        <td><a class="btn btn-danger" th:href="@{/editorial/eliminar/} + ${editorial.id}">Eliminar</a></td>
+                        <td><a sec:authorize="hasRole('ROLE_ADMIN')"  class="btn btn-primary" th:href="@{/editorial/editar/} + ${editorial.id}">Editar</a></td>
+                        <td><a sec:authorize="hasRole('ROLE_ADMIN')"  class="btn btn-danger" th:href="@{/editorial/eliminar/} + ${editorial.id}">Eliminar</a></td>
                     </tr>
                 </tbody>
             </table>

@@ -25,11 +25,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/css/*","/img/*","/js/*","/","/usuario/registro","/usuario/guardar").permitAll()
-                .antMatchers("/usuario/editar/*","/usuario/editar/*","/autor/**","/editorial/**","/prestamo/**","/cliente/**",
-                "/libro/editar/*","/libro/eliminar/*").hasAnyAuthority("ROLE_ADMIN").anyRequest().authenticated()
+                .antMatchers("/css/*", "/img/*", "/js/*", "/", "/usuario/registro", "/usuario/guardar").permitAll()
+                .antMatchers("/usuario/listar", "/usuario/eliminar/*",
+                        "/usuario/editar/*", "/autor/**", "/editorial/**", "/prestamo/**", "/cliente/**",
+                        "/libro/editar/*", "/libro/eliminar/*").hasAnyAuthority("ROLE_ADMIN").anyRequest().authenticated()
                 .and().formLogin()
-                .loginPage("/login") 
+                .loginPage("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/")
@@ -40,8 +41,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
                 .and().exceptionHandling().accessDeniedPage("/errores/403")
                 .and().csrf().disable();
-
-
-
     }
 }

@@ -4,6 +4,7 @@ package com.example.LibreriaWeb.web;
 import com.example.LibreriaWeb.domain.Cliente;
 import com.example.LibreriaWeb.errores.ErrorServicio;
 import com.example.LibreriaWeb.service.ClienteServiceImpl;
+import com.example.LibreriaWeb.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteServiceImpl clienteService;
+    
+    @Autowired
+     private MailService mailService;
 
     @GetMapping("/listar")
     public String agregarCliente(Model model) {
@@ -35,7 +39,9 @@ public class ClienteController {
     @PostMapping("/form")
     public String guardar(Cliente cliente, SessionStatus status) {
         status.setComplete();
+
         clienteService.guardar(cliente);
+        mailService.enviarEmail(cliente.getEmail(), "Libreria Web", "Bienvenido "+cliente.getNombre()+" "+cliente.getApellido());
         return "redirect:/cliente/listar";
     }
 

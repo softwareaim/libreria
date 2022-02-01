@@ -87,8 +87,8 @@
                         <td th:text="${libro1.autor.nombre}"></td>
                         <td th:text="${libro1.editorial.nombre}"></td>
 
-                        <td><a class="btn btn-primary" th:href="@{/libro/editar/} + ${libro1.id}">Editar</a></td>
-                        <td><a class="btn btn-danger" th:href="@{/libro/eliminar/} + ${libro1.id}">Eliminar</a></td>
+                        <td><a sec:authorize="hasRole('ROLE_ADMIN')"  class="btn btn-primary" th:href="@{/libro/editar/} + ${libro1.id}">Editar</a></td>
+                        <td><a sec:authorize="hasRole('ROLE_ADMIN')"  class="btn btn-danger" th:href="@{/libro/eliminar/} + ${libro1.id}">Eliminar</a></td>
                     </tr>
                 </tbody>
             </table>
